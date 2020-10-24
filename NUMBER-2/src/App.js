@@ -4,15 +4,17 @@ import './App.css';
 
 function App() {
   const [input, setInput] = useState('');
-  const [history, setHistory] = useState([]);
+  let history = [];
   const [statusBtn, setStatusBtn] = useState(false);
   const reverse = () => {
     setStatusBtn(true);
     setInput(input.split('').reverse().join(''));
   };
 
-  console.log(history);
-  const undo = () => {};
+  const undo = () => {
+    history.push(input);
+    console.log(history);
+  };
 
   const redo = () => {};
 
@@ -27,10 +29,6 @@ function App() {
         value={input}
         onChange={(e) => {
           setInput(e.target.value);
-          setHistory([
-            e.target.value,
-            statusBtn === true ? e.target.value : null,
-          ]);
         }}
       />
       <br />
@@ -41,7 +39,7 @@ function App() {
       <br />
       <br />
       <button onClick={reverse}>Reverse</button>
-      <button onClick={undo} onDoubleClick={redo}>
+      <button onClick={undo()} onDoubleClick={redo}>
         Undo/Redo
       </button>
     </div>
