@@ -1,24 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
 import './App.css';
 
 function App() {
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState([]);
+  const [statusBtn, setStatusBtn] = useState(false);
+  const reverse = () => {
+    setStatusBtn(true);
+    setInput(input.split('').reverse().join(''));
+  };
+
+  console.log(history);
+  const undo = () => {};
+
+  const redo = () => {};
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="App"
+      style={{ backgroundColor: 'black', height: '100vh', paddingTop: '30vh' }}
+    >
+      <input
+        type="text"
+        placeholder="Masukan Kata"
+        value={input}
+        onChange={(e) => {
+          setInput(e.target.value);
+          setHistory([
+            e.target.value,
+            statusBtn === true ? e.target.value : null,
+          ]);
+        }}
+      />
+      <br />
+      <br />
+      <label style={{ color: 'white', fontSize: '48px' }}>
+        Output: {input}
+      </label>
+      <br />
+      <br />
+      <button onClick={reverse}>Reverse</button>
+      <button onClick={undo} onDoubleClick={redo}>
+        Undo/Redo
+      </button>
     </div>
   );
 }
